@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Andrew Cao · Aerospace Engineering</title>
 <meta name="description" content="Andrew Cao, aerospace engineering student at Cal Poly Pomona. Aerodynamics, CFD, structures and systems engineering projects.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://andrewcao-hub.github.io/">
+<meta property="og:title" content="Andrew Cao · Aerospace Engineering Portfolio">
+<meta property="og:description" content="Aerospace Engineering @ Cal Poly Pomona. Aerodynamics & CFD, FEA and systems engineering projects. Seeking a Summer 2027 internship.">
+<meta property="og:image" content="https://andrewcao-hub.github.io/linkedin-thumbnail.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
 <!--
   HOW TO ADD YOUR PROOF IMAGES
   1. Make a folder called "images" next to this file.
@@ -76,6 +84,13 @@ header.hero { padding: 60px 0 44px; display: grid; gap: 18px; }
 .hero .label { color: var(--muted); text-transform: uppercase; }
 .hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800; letter-spacing: -0.02em; }
 .hero h1 span { color: var(--accent); font-size: 0.55em; font-weight: 700; letter-spacing: -0.01em; }
+.id-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.headshot {
+  width: 132px; height: 165px; object-fit: cover; display: block;
+  border: 1.5px solid var(--ink); padding: 5px; background: var(--surface);
+  box-shadow: 6px 6px 0 var(--accent);
+}
+@media (max-width: 440px) { .headshot { width: 104px; height: 130px; } }
 .hero p.lede { max-width: 62ch; font-size: 1.15rem; color: var(--muted); margin: 0; }
 .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
 .btn {
@@ -229,7 +244,10 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
 
   <header class="hero" id="about">
     <span class="mono label">Aerospace Engineering · Cal Poly Pomona · Rowland Heights, CA</span>
-    <h1>Andrew Cao<br><span>Aerospace Engineering Student</span></h1>
+    <div class="id-row">
+      <img class="headshot" src="headshot.jpg" alt="Headshot of Andrew Cao" width="132" height="165">
+      <h1>Andrew Cao<br><span>Aerospace Engineering Student</span></h1>
+    </div>
     <div class="about">
       <div class="intro">
         <h2 class="mono about-k">About</h2>
@@ -247,7 +265,6 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
         <div><dt>Graduation</dt><dd>Spring 2028</dd></div>
         <div><dt>GPA</dt><dd>3.86 / 4.0</dd></div>
         <div><dt>Citizenship</dt><dd>U.S. Citizen</dd></div>
-        <div><dt>Member</dt><dd>AIAA · Engineering Leadership Program</dd></div>
       </dl>
     </div>
     <div class="links">
@@ -525,8 +542,12 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     <div class="sec-head"><span class="mono">05</span><h2>Certifications</h2></div>
     <div class="certs">
       <figure class="fig cert">
-        <button class="frame" type="button" data-file="matlab-onramp-cert.jpg"><img src="matlab-onramp-cert.jpg" alt="MathWorks course completion certificate: Andrew Cao completed 100% of MATLAB Onramp, 18 November 2026"></button>
-        <figcaption><b>MATLAB Onramp</b><br>MathWorks Training Services · 100% complete · Nov 2026</figcaption>
+        <button class="frame" type="button" data-file="matlab-simulink-skills-cert.jpg"><img src="matlab-simulink-skills-cert.jpg" alt="MathWorks certificate: Andrew Cao completed the MATLAB Skills for Simulink Modeling learning path, 19 November 2026"></button>
+        <figcaption><b>MATLAB Skills for Simulink Modeling</b><br>MathWorks Training Services · 7.5-hour learning path · Nov 2026</figcaption>
+      </figure>
+      <figure class="fig cert">
+        <button class="frame" type="button" data-file="matlab-programming-cert.jpg"><img src="matlab-programming-cert.jpg" alt="MathWorks certificate: Andrew Cao completed the Programming in MATLAB learning path, 19 November 2026"></button>
+        <figcaption><b>Programming in MATLAB</b><br>MathWorks Training Services · 4-hour learning path · Nov 2026</figcaption>
       </figure>
       <figure class="fig cert">
         <button class="frame" type="button" data-file="food-handler-card.jpg"><img src="food-handler-card.jpg" alt="California Food Handlers Course certificate of training awarded to Andrew Cao, issued August 20, 2026"></button>
