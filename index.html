@@ -166,6 +166,12 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { border: 1px solid var(--line); background: var(--surface); padding: 4px 10px; font-size: 0.9rem; }
 
+.certs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; align-items: start; }
+.cert figcaption { font-size: 0.88rem; line-height: 1.45; }
+.cert figcaption b { font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; }
+.cert-text { border: 1.5px dashed var(--line); background: var(--surface); padding: 20px; display: grid; gap: 6px; align-content: center; min-height: 160px; }
+.cert-text .mono { color: var(--accent); }
+.cert-text span:last-child { color: var(--muted); font-size: 0.9rem; }
 .contact { display: grid; gap: 14px; }
 .contact p { margin: 0; max-width: 60ch; }
 .contact .email { font-family: var(--font-mono); font-size: 0.95rem; word-break: break-all; }
@@ -216,6 +222,7 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
       <li><a href="#coursework">Coursework</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -245,8 +252,8 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     </div>
     <div class="links">
       <a class="btn primary" href="#projects">See the work</a>
-      <a class="btn" href="https://www.linkedin.com/in/andrew-cao">LinkedIn</a>
-      <a class="btn" href="Andrew_Cao_Resume.pdf.pdf">Résumé (PDF)</a>
+      <a class="btn" href="https://www.linkedin.com/in/andrew-cao-/">LinkedIn</a>
+      <a class="btn" href="Andrew_Cao_Resume.pdf">Résumé (PDF)</a>
     </div>
     <div class="stats" aria-label="Highlights">
       <div class="stat"><b>−35.6%</b><span>FSAE front-wing drag</span></div>
@@ -514,14 +521,33 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     </div>
   </section>
 
+  <section id="certifications">
+    <div class="sec-head"><span class="mono">05</span><h2>Certifications</h2></div>
+    <div class="certs">
+      <figure class="fig cert">
+        <button class="frame" type="button" data-file="matlab-onramp-cert.jpg"><img src="matlab-onramp-cert.jpg" alt="MathWorks course completion certificate: Andrew Cao completed 100% of MATLAB Onramp, 18 November 2026"></button>
+        <figcaption><b>MATLAB Onramp</b><br>MathWorks Training Services · 100% complete · Nov 2026</figcaption>
+      </figure>
+      <figure class="fig cert">
+        <button class="frame" type="button" data-file="food-handler-card.jpg"><img src="food-handler-card.jpg" alt="California Food Handlers Course certificate of training awarded to Andrew Cao, issued August 20, 2026"></button>
+        <figcaption><b>California Food Handler Card</b><br>StateFoodSafety (ANAB-accredited) · Aug 2026, valid 3 years</figcaption>
+      </figure>
+      <div class="cert cert-text">
+        <span class="mono">CPP</span>
+        <b>Cal Poly Pomona Yellow Card</b>
+        <span>Shop access with completed safety training and procedures</span>
+      </div>
+    </div>
+  </section>
+
   <section id="contact">
-    <div class="sec-head"><span class="mono">05</span><h2>Contact</h2></div>
+    <div class="sec-head"><span class="mono">06</span><h2>Contact</h2></div>
     <div class="contact">
       <p>I'm seeking a Summer 2027 engineering internship in vehicle design, aerodynamics, structures or systems engineering. Let's connect!</p>
       <dl class="facts reach">
         <div><dt>School email</dt><dd><a class="email" href="mailto:andrewcao1@cpp.edu">andrewcao1@cpp.edu</a></dd></div>
         <div><dt>Personal email</dt><dd><a class="email" href="mailto:andrewcao456@gmail.com">andrewcao456@gmail.com</a></dd></div>
-        <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/andrew-cao">linkedin.com/in/andrew-cao</a></dd></div>
+        <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/andrew-cao-/">linkedin.com/in/andrew-cao-</a></dd></div>
       </dl>
     </div>
   </section>
