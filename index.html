@@ -154,6 +154,12 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
 .job h3 { font-size: 1.15rem; }
 .job .org { color: var(--accent); font-weight: 500; }
 .job p { margin: 8px 0 0; color: var(--muted); max-width: 70ch; }
+.job + .job { border-top: 1px solid var(--line); padding-top: 24px; margin-top: 24px; }
+.job-body { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
+.job-list { margin: 8px 0 0; padding-left: 18px; color: var(--muted); display: grid; gap: 4px; max-width: 70ch; }
+.job .cert-line { font-size: 0.9rem; }
+.job .cert-line b { color: var(--ink); font-weight: 600; }
+@media (max-width: 720px) { .job-body { grid-template-columns: 1fr; } .job-cert { max-width: 320px; } }
 
 .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
 .skill-group h3 { font-size: 0.85rem; font-family: var(--font-mono); font-weight: 500; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
@@ -207,6 +213,7 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#coursework">Coursework</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -421,8 +428,64 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     </article>
   </section>
 
+  <section id="coursework">
+    <div class="sec-head"><span class="mono">02</span><h2>Coursework</h2></div>
+
+    <!-- COURSE: ARO 4080 -->
+    <article class="project">
+      <div class="p-text">
+        <div class="p-meta mono"><span>Cal Poly Pomona</span><span>Fall 2026</span></div>
+        <h3>ARO 4080: Finite Element Analysis</h3>
+        <span class="role">Hand analysis + Simcenter Femap/Nastran</span>
+        <ul>
+          <li>Derived and assembled stiffness matrices by hand for spring, 2D and 3D truss, beam, plane frame and grid elements, including symmetry and inclined supports.</li>
+          <li>Built Nastran models with CROD, CONROD, CBAR, CBEAM, CQUAD4 and CSHEAR elements in Femap.</li>
+          <li>Ran linear static, thermal, normal modes, buckling, nonlinear gap and material nonlinear analyses.</li>
+          <li>Documented every model in an FEM report with its bulk data (BDF) and f06 output, checked against hand solutions.</li>
+        </ul>
+        <div class="metrics">
+          <span class="metric">6 Nastran element types</span>
+          <span class="metric">6 analysis types</span>
+        </div>
+        <div class="tools"><span>Simcenter Femap</span><span>Simcenter Nastran</span><span>Hand FEA</span><span>Matrix methods</span></div>
+      </div>
+      <div class="p-figs">
+        <figure class="fig wide">
+          <button class="frame" type="button" data-file="fea-circular-plate-mode1.jpg"><img src="fea-circular-plate-mode1.jpg" alt="Femap contour of the first vibration mode of an edge-constrained circular plate at 70.05 Hz"></button>
+          <figcaption><b>FIG C.1</b>Normal modes: circular plate, mode 1 at 70.05 Hz</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="frame" type="button" data-file="fea-plate-buckling.jpg"><img src="fea-plate-buckling.jpg" alt="Femap eigenvalue mode shape of a rectangular CQUAD4 plate, first eigenvalue 66,056.8"></button>
+          <figcaption><b>FIG C.2</b>CQUAD4 plate buckling, eigenvalue 1 = 66,056.8</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="frame" type="button" data-file="fea-truss-beam-stress.jpg"><img src="fea-truss-beam-stress.jpg" alt="Nine-member truss modeled with beam elements under three 5,000 lb loads, colored by combined stress"></button>
+          <figcaption><b>FIG C.3</b>Beam-element truss under 3 × 5,000 lb, combined stress</figcaption>
+        </figure>
+      </div>
+    </article>
+  </section>
+
   <section id="experience">
-    <div class="sec-head"><span class="mono">02</span><h2>Experience</h2></div>
+    <div class="sec-head"><span class="mono">03</span><h2>Experience</h2></div>
+    <div class="job">
+      <span class="mono when">Jun 2026 – Present</span>
+      <div class="job-body">
+        <div>
+          <h3>Barista</h3>
+          <span class="org">Starbucks Corporation</span>
+          <ul class="job-list">
+            <li>Deliver friendly, personalized customer service, communicating clearly with customers and teammates and building connections with regulars.</li>
+            <li>Handle cash and card transactions accurately and follow food safety and sanitation standards when preparing beverages and food.</li>
+          </ul>
+          <p class="cert-line"><b>California Food Handler Card</b> · StateFoodSafety (ANAB-accredited) · issued Aug 2026, valid 3 years</p>
+        </div>
+        <figure class="fig job-cert">
+          <button class="frame" type="button" data-file="food-handler-card.jpg"><img src="food-handler-card.jpg" alt="California Food Handlers Course certificate of training awarded to Andrew Cao, issued August 20, 2026"></button>
+          <figcaption><b>CERT</b>California Food Handler Card</figcaption>
+        </figure>
+      </div>
+    </div>
     <div class="job">
       <span class="mono when">Jun 2025 – Jun 2026</span>
       <div>
@@ -434,7 +497,7 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
   </section>
 
   <section id="skills">
-    <div class="sec-head"><span class="mono">03</span><h2>Skills</h2></div>
+    <div class="sec-head"><span class="mono">04</span><h2>Skills</h2></div>
     <div class="skills">
       <div class="skill-group">
         <h3>Analysis &amp; simulation</h3>
@@ -452,7 +515,7 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
   </section>
 
   <section id="contact">
-    <div class="sec-head"><span class="mono">04</span><h2>Contact</h2></div>
+    <div class="sec-head"><span class="mono">05</span><h2>Contact</h2></div>
     <div class="contact">
       <p>I'm seeking a Summer 2027 engineering internship in vehicle design, aerodynamics, structures or systems engineering. Let's connect!</p>
       <dl class="facts reach">
