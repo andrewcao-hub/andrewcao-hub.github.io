@@ -265,6 +265,65 @@ section { border-top-color: transparent; }
 
 .course-list { margin-bottom: 24px; }
 .course-list h3 { font-size: .8rem; font-weight: 500; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+
+.phase + ul { margin-top: -4px; }
+.phase { display: flex; align-items: baseline; gap: 10px; font-family: var(--font-body); font-size: 0.98rem; font-weight: 600; margin-top: 4px; }
+.phase .mono { font-size: 0.7rem; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 999px; padding: 1px 8px; }
+
+/* Print / Save as PDF */
+@media print {
+  @page { size: letter; margin: 0.5in; }
+  :root, :root[data-theme="dark"] { --paper: #fff; --surface: #fff; --ink: #14223a; --muted: #4a5668; --line: #cfd8e3; --accent: #1f5fd1; --shadow: none; color-scheme: light; }
+  html, body { background: #fff !important; font-size: 10.5pt; }
+  nav[aria-label="Main"], .links, .reel, .lightbox, .alt-hud, .flightpath, .sky { display: none !important; }
+  .project, .job, figure, .cert, .cert-text, .facts, .skill-group { break-inside: avoid; page-break-inside: avoid; }
+  section { padding: 18px 0; }
+  .sec-head { break-after: avoid; }
+  .project { grid-template-columns: 1fr 1fr; box-shadow: none; border: 1px solid var(--line); }
+  .p-figs { grid-template-columns: 1fr 1fr; }
+  a { color: var(--ink); text-decoration: none; }
+  .frame { cursor: default; }
+  header.hero { padding: 0 0 12px; }
+}
+
+@media print {
+  html, body { font-size: 8.6pt; line-height: 1.4; }
+  @page { size: letter; margin: 0.4in; }
+  .sheet { padding: 0; max-width: none; }
+  section { padding: 10px 0; }
+  .sec-head { margin-bottom: 8px; }
+  .sec-head h2 { font-size: 14pt; }
+  .hero h1 { font-size: 24pt; }
+  .id-row { gap: 14px; }
+  .headshot { width: 70px; height: 88px; }
+  header.hero { gap: 8px; }
+  .about { gap: 18px; }
+  .facts div { padding: 3px 10px; }
+  .project { margin-bottom: 10px; grid-template-columns: 1.5fr 1fr; }
+  .p-text { padding: 10px 12px; gap: 5px; }
+  .p-text h3 { font-size: 11pt; }
+  .p-text ul { gap: 2px; }
+  .p-figs { padding: 10px; gap: 6px; grid-template-columns: 1fr; }
+  .p-figs figure:nth-child(n+3) { display: none !important; }
+  .p-figs .fig.wide { grid-column: auto; }
+  .fig figcaption { font-size: 7pt; }
+  .frame:not(.empty) img { max-height: 1.15in; object-fit: contain; }
+  .p-figs { grid-template-columns: 1fr 1fr; align-content: start; }
+  .project { grid-template-columns: 1.25fr 1fr; }
+  .metric, .tools span, .chip { font-size: 7pt; padding: 1px 6px; }
+  .course-list { margin-bottom: 8px; }
+  .job + .job { padding-top: 8px; margin-top: 8px; }
+  .job { gap: 10px; }
+  .skills { gap: 10px; grid-template-columns: repeat(4, 1fr); }
+  .certs { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .cert figcaption { font-size: 7pt; }
+  .cert figcaption b { font-size: 7.5pt; }
+  .cert-text { min-height: 0; padding: 8px; }
+  .titleblock { display: none; }
+  .project { break-inside: auto; page-break-inside: auto; }
+  .p-text li, .fig { break-inside: avoid; }
+  #contact { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -312,12 +371,13 @@ section { border-top-color: transparent; }
       <a class="btn primary" href="#projects">See the work</a>
       <a class="btn" href="https://www.linkedin.com/in/andrew-cao-/">LinkedIn</a>
       <a class="btn" href="Andrew_Cao_Resume_2026.1.pdf">Résumé (PDF)</a>
+      <a class="btn" href="Andrew_Cao_Portfolio.pdf">Portfolio (PDF)</a>
     </div>
     <div class="reel" role="list" aria-label="Project previews">
       <a class="tile" role="listitem" href="#p-fsae"><img src="fsae-full-car.png" alt="" loading="lazy"><span class="tile-n mono">01</span><span class="tile-t"><b>Bronco FSAE Electric</b><small>CFD · SolidWorks</small></span></a>
       <a class="tile" role="listitem" href="#p-evtol"><img src="evtol-4-prop-config.png" alt="" loading="lazy"><span class="tile-n mono">02</span><span class="tile-t"><b>Maelstrom eVTOL</b><small>OpenVSP · VSPAERO</small></span></a>
       <a class="tile" role="listitem" href="#p-cubesat"><img src="cubesat-tracker-closeup.jpg" alt="" loading="lazy"><span class="tile-n mono">03</span><span class="tile-t"><b>Sun-Tracking CubeSat</b><small>Arduino · Simulink</small></span></a>
-      <a class="tile" role="listitem" href="#p-a37"><img src="a37-team-wind-tunnel.jpg" alt="" loading="lazy"><span class="tile-n mono">04</span><span class="tile-t"><b>A-37 Dragonfly</b><small>Systems engineering</small></span></a>
+      <a class="tile" role="listitem" href="#p-a37"><img src="a37-team-wind-tunnel.jpg" alt="" loading="lazy"><span class="tile-n mono">04</span><span class="tile-t"><b>A-37 &amp; F-22 Tunnel Testing</b><small>Systems eng. · Wind tunnel</small></span></a>
       <a class="tile" role="listitem" href="#c-aro4080"><img src="fea-circular-plate-mode1.jpg" alt="" loading="lazy"><span class="tile-n mono">05</span><span class="tile-t"><b>ARO 4080 FEA</b><small>Femap · Nastran</small></span></a>
     </div>
   </header>
@@ -445,48 +505,57 @@ section { border-top-color: transparent; }
     <!-- PROJECT 4: A-37 -->
     <article class="project" id="p-a37">
       <div class="p-text">
-        <div class="p-meta mono"><span>Cal Poly Pomona</span><span>Jan 2026 – Jun 2026</span></div>
-        <h3>Cessna A-37 Dragonfly Design (ARO 2011L)</h3>
-        <span class="role">Deputy, Systems Engineering</span>
+        <div class="p-meta mono"><span>Cal Poly Pomona · ARO 2011L</span><span>Jan 2026 – Jun 2026</span></div>
+        <h3>Systems Engineering Design and Wind/Water Tunnel Testing</h3>
+        <span class="role">Deputy, Systems Engineering · Deputy Team Lead</span>
+        <h4 class="phase"><span class="mono">PHASE 1</span>Cessna A-37 Dragonfly design cycle</h4>
         <ul>
           <li>Derived system-level and derived requirements from the mission timeline; applied functional analysis to down-select from three candidate architectures to a T-37 trainer conversion.</li>
-          <li>Built weighted trade matrices, risk analyses, and Simcenter simulations; presented the CoDR and PDR.</li>
+          <li>Built weighted trade matrices, risk analyses, and Simcenter simulations; presented the CoDR and PDR to the professor and an audience of 20+ students.</li>
+        </ul>
+        <h4 class="phase"><span class="mono">PHASE 2</span>F-22 wind and water tunnel testing</h4>
+        <ul>
+          <li>Tested a 2.5%-scale F-22 on a sting balance in the Cal Poly Pomona low-speed wind tunnel from −8° to 36° angle of attack and −8° to 12° yaw at three Reynolds numbers (2.2–3.9 × 10⁵).</li>
+          <li>Reduced force and moment data to lift, drag, pitching moment, side force, and yaw moment coefficients; found C<sub>L,max</sub> ≈ 1.25 and a negative C<sub>M</sub> across the range, indicating a statically stable configuration.</li>
+          <li>Correlated tuft and water tunnel dye visualization with the force data, showing chine vortices kept producing lift up to ~35° AoA, well past wing stall near 16°.</li>
+          <li>Authored the report's theory section on Reynolds number scaling, force and moment reduction, and performance coefficients.</li>
         </ul>
         <div class="metrics">
-          <span class="metric">CoDR + PDR</span>
+          <span class="metric">CoDR + PDR · 20+ audience</span>
           <span class="metric">3 architectures → 1</span>
-          <span class="metric">Weighted trade matrices</span>
+          <span class="metric">AoA −8° to 36°</span>
+          <span class="metric">Lift to ~35° AoA</span>
         </div>
-        <div class="tools"><span>Simcenter</span><span>Requirements</span><span>Risk analysis</span></div>
+        <div class="tools"><span>Simcenter</span><span>Trade studies</span><span>Wind tunnel</span><span>Water tunnel</span><span>Sting balance</span><span>Excel</span></div>
       </div>
       <div class="p-figs">
         <figure class="fig wide">
-          <button class="frame" type="button" data-file="a37-team-wind-tunnel.jpg"><img src="a37-team-wind-tunnel.jpg" alt="The A-37 design team standing in front of the Cal Poly wind tunnel with the aircraft model in the test section"></button>
-          <figcaption><b>FIG 4.1</b>Design team with the A-37 model in the Cal Poly wind tunnel</figcaption>
+          <button class="frame" type="button" data-file="a37-team-wind-tunnel.jpg"><img src="a37-team-wind-tunnel.jpg" alt="The design team standing in front of the Cal Poly wind tunnel with the F-22 model in the test section"></button>
+          <figcaption><b>FIG 4.1</b>Team 2 at the Cal Poly Pomona low-speed wind tunnel</figcaption>
         </figure>
         <figure class="fig">
-          <button class="frame" type="button" data-file="a37-design-reference-mission.jpg"><img src="a37-design-reference-mission.jpg" alt="Design reference mission profile: climb to 36,000 ft cruise, descend for weapons release at 1,000 ft, land 250 miles out"></button>
-          <figcaption><b>FIG 4.2</b>Design reference mission: 36K ft cruise, low-altitude attack run, 250 mi</figcaption>
+          <button class="frame" type="button" data-file="a37-candidate-architectures.jpg"><img src="a37-candidate-architectures.jpg" alt="Three candidate architectures compared: A-37a Dragonfly, LGAH-1 rotorcraft and B-11 Strikeforce"></button>
+          <figcaption><b>FIG 4.2</b>Three candidate architectures for feasibility analysis</figcaption>
         </figure>
         <figure class="fig">
           <button class="frame" type="button" data-file="a37-system-requirements.jpg"><img src="a37-system-requirements.jpg" alt="Table of system-level requirements with validation methods"></button>
           <figcaption><b>FIG 4.3</b>System-level requirements and validation methods</figcaption>
         </figure>
-        <figure class="fig">
-          <button class="frame" type="button" data-file="a37-derived-requirements.jpg"><img src="a37-derived-requirements.jpg" alt="Table of derived requirements traced to system-level requirements"></button>
-          <figcaption><b>FIG 4.4</b>Derived requirements traced to system level</figcaption>
-        </figure>
-        <figure class="fig">
-          <button class="frame" type="button" data-file="a37-candidate-architectures.jpg"><img src="a37-candidate-architectures.jpg" alt="Three candidate architectures compared: A-37a Dragonfly, LGAH-1 rotorcraft and B-11 Strikeforce"></button>
-          <figcaption><b>FIG 4.5</b>Three candidate architectures for feasibility analysis</figcaption>
-        </figure>
-        <figure class="fig wide">
-          <button class="frame" type="button" data-file="a37-functional-allocation.jpg"><img src="a37-functional-allocation.jpg" alt="Functional allocation charts: enterprise architecture, operational architectures and functional WBS"></button>
-          <figcaption><b>FIG 4.6</b>Functional allocation: enterprise, operational and functional WBS architectures</figcaption>
-        </figure>
         <figure class="fig wide">
           <button class="frame" type="button" data-file="a37-selected-architecture.jpg"><img src="a37-selected-architecture.jpg" alt="Selected architecture: A-37 Dragonfly converted from the T-37 trainer with twin J-85 turbojets, eight hardpoints and wingtip tanks"></button>
-          <figcaption><b>FIG 4.7</b>Selected architecture: A-37 Dragonfly, converted from the T-37 trainer</figcaption>
+          <figcaption><b>FIG 4.4</b>Selected architecture: A-37 Dragonfly, converted from the T-37 trainer</figcaption>
+        </figure>
+        <figure class="fig wide">
+          <button class="frame" type="button" data-file="f22-water-tunnel-20deg.jpg"><img src="f22-water-tunnel-20deg.jpg" alt="Three views of the F-22 water tunnel model at 20 degrees angle of attack and 2.5 inches per second, labeled with vortex formation, vortex burst point, separated flow, turbulent flow and wingtip separation"></button>
+          <figcaption><b>FIG 4.5</b>Water tunnel at α = 20°, 2.5 in/s: vortex formation, burst and flow separation</figcaption>
+        </figure>
+        <figure class="fig wide">
+          <button class="frame" type="button" data-file="f22-tunnel-models.png"><img src="f22-tunnel-models.png" alt="Drawings of the two test models: the 0.00936-scale water tunnel model with dye orifices, and the 2.5%-scale wind tunnel model in the 3.33 ft test section with tuft locations"></button>
+          <figcaption><b>FIG 4.6</b>Test models: water tunnel (dye orifices) and wind tunnel (tuft locations)</figcaption>
+        </figure>
+        <figure class="fig wide">
+          <button class="frame" type="button" data-file="f22-wind-tunnel-tufts-aoa.jpg"><img src="f22-wind-tunnel-tufts-aoa.jpg" alt="Four top views of the tufted F-22 wind tunnel model at 0, 12, 20 and 36 degrees angle of attack, showing tufts going from quiet to random on the wing while the chine tufts keep spinning"></button>
+          <figcaption><b>FIG 4.7</b>Wind tunnel tufts at 59 ft/s, α = 0° to 36°: the wing stalls while the chine vortex keeps producing lift</figcaption>
         </figure>
       </div>
     </article>
