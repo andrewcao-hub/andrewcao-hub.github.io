@@ -26,12 +26,15 @@
 <style>
 :root {
   /* Layout idea: an engineering drawing sheet. Grid paper, ink-blue linework, numbered figures, a title block as the footer. */
-  --paper: #f4f6f8;
+  --paper: #f6f7f9;
   --surface: #ffffff;
   --ink: #14223a;
   --muted: #5a6678;
   --line: #c9d3e0;
   --grid: rgba(30, 70, 140, 0.06);
+  --glow: rgba(31, 95, 209, 0.13);
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(20, 34, 58, 0.05), 0 8px 24px rgba(20, 34, 58, 0.06);
   --accent: #1f5fd1;
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
@@ -40,14 +43,14 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0d1a2e; --surface: #12233d; --ink: #e6edf7; --muted: #9aabc4;
-    --line: #2a4166; --grid: rgba(140, 180, 255, 0.07); --accent: #6aa3ff;
+    --paper: #0b1424; --surface: #111e33; --ink: #e6edf7; --muted: #9aabc4;
+    --line: #24395a; --grid: rgba(140, 180, 255, 0.07); --accent: #6aa3ff; --glow: rgba(106, 163, 255, 0.16); --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0d1a2e; --surface: #12233d; --ink: #e6edf7; --muted: #9aabc4;
-  --line: #2a4166; --grid: rgba(140, 180, 255, 0.07); --accent: #6aa3ff;
+  --paper: #0b1424; --surface: #111e33; --ink: #e6edf7; --muted: #9aabc4;
+  --line: #24395a; --grid: rgba(140, 180, 255, 0.07); --accent: #6aa3ff; --glow: rgba(106, 163, 255, 0.16); --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25);
   color-scheme: dark;
 }
 
@@ -57,10 +60,8 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background-color: var(--paper);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(1100px 520px at 85% -120px, var(--glow), transparent 70%);
+  background-repeat: no-repeat;
   color: var(--ink);
   font: 400 1rem/1.6 var(--font-body);
 }
@@ -170,7 +171,7 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
 .job .org { color: var(--accent); font-weight: 500; }
 .job p { margin: 8px 0 0; color: var(--muted); max-width: 70ch; }
 .job + .job { border-top: 1px solid var(--line); padding-top: 24px; margin-top: 24px; }
-.job-body { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
+.job-body { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
 .job-list { margin: 8px 0 0; padding-left: 18px; color: var(--muted); display: grid; gap: 4px; max-width: 70ch; }
 .job .cert-line { font-size: 0.9rem; }
 .job .cert-line b { color: var(--ink); font-weight: 600; }
@@ -224,6 +225,46 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
 @media (max-width: 440px) {
   .p-figs { grid-template-columns: 1fr; }
 }
+
+/* Clean theme: rounded cards, soft shadows */
+.project, .facts, .stats, .cert-text, .titleblock { border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.project { border-color: transparent; }
+.project::before { border-radius: var(--radius) 0 0 var(--radius); }
+.frame { border-radius: 8px; }
+.btn { border-radius: 8px; }
+.metric, .chip, .tools span { border-radius: 999px; }
+.headshot { border-radius: 14px; border: 0; padding: 0; box-shadow: var(--shadow), 0 0 0 4px var(--surface), 0 0 0 5px var(--line); }
+.titleblock { border: 1px solid var(--line); }
+.titleblock div { border-right-color: var(--line); }
+@media (max-width: 720px) { .titleblock div:nth-child(-n+2) { border-bottom-color: var(--line); } }
+section { border-top-color: transparent; }
+
+/* Project preview reel */
+.reel { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 22px; }
+.tile { position: relative; display: block; aspect-ratio: 1 / 1; border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow); text-decoration: none; color: #fff; background: #0b1424; isolation: isolate; }
+.tile, .tile:hover { color: #fff; }
+.tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1), filter .4s; }
+.tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,14,26,0) 35%, rgba(8,14,26,.88) 100%); transition: opacity .3s; }
+.tile-n { position: absolute; top: 10px; left: 12px; z-index: 1; font-size: .72rem; background: rgba(8,14,26,.55); padding: 2px 8px; border-radius: 999px; }
+.tile-t { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 1; display: grid; gap: 2px; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+.tile-t b { font-family: var(--font-display); font-size: 1rem; line-height: 1.2; }
+.tile-t small { font-size: .78rem; opacity: .8; }
+.tile-t small::after { content: " →"; display: inline-block; opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s; }
+.tile:hover img, .tile:focus-visible img { transform: scale(1.08); }
+.tile:hover .tile-t, .tile:focus-visible .tile-t { transform: translateY(-4px); }
+.tile:hover .tile-t small::after, .tile:focus-visible .tile-t small::after { opacity: 1; transform: none; }
+.tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 820px) {
+  .reel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+  .tile { flex: 0 0 46%; scroll-snap-align: start; }
+}
+@media (max-width: 440px) { .tile { flex-basis: 70%; } }
+@media (prefers-reduced-motion: reduce) { .tile img, .tile-t { transition: none; } }
+.project { scroll-margin-top: 20px; }
+
+.course-list { margin-bottom: 24px; }
+.course-list h3 { font-size: .8rem; font-weight: 500; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -260,9 +301,9 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
       </div>
       <dl class="facts">
         <div><dt>Seeking</dt><dd>Summer 2027 internship</dd></div>
-        <div><dt>Degree</dt><dd>B.S. Aerospace Engineering</dd></div>
+        <div><dt>Degree</dt><dd>B.S., Aerospace Engineering</dd></div>
         <div><dt>School</dt><dd>Cal Poly Pomona</dd></div>
-        <div><dt>Graduation</dt><dd>Spring 2028</dd></div>
+        <div><dt>Expected graduation</dt><dd>Spring 2028</dd></div>
         <div><dt>GPA</dt><dd>3.86 / 4.0</dd></div>
         <div><dt>Citizenship</dt><dd>U.S. Citizen</dd></div>
       </dl>
@@ -270,13 +311,14 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     <div class="links">
       <a class="btn primary" href="#projects">See the work</a>
       <a class="btn" href="https://www.linkedin.com/in/andrew-cao-/">LinkedIn</a>
-      <a class="btn" href="Andrew_Cao_Resume.pdf">Résumé (PDF)</a>
+      <a class="btn" href="Andrew_Cao_Resume_2026.pdf">Résumé (PDF)</a>
     </div>
-    <div class="stats" aria-label="Highlights">
-      <div class="stat"><b>−35.6%</b><span>FSAE front-wing drag</span></div>
-      <div class="stat"><b>+12.5%</b><span>FSAE front-wing downforce</span></div>
-      <div class="stat"><b>50+</b><span>eVTOL VSPAERO simulations</span></div>
-      <div class="stat"><b>3.86</b><span>GPA</span></div>
+    <div class="reel" role="list" aria-label="Project previews">
+      <a class="tile" role="listitem" href="#p-fsae"><img src="fsae-full-car.png" alt="" loading="lazy"><span class="tile-n mono">01</span><span class="tile-t"><b>Bronco FSAE Electric</b><small>CFD · SolidWorks</small></span></a>
+      <a class="tile" role="listitem" href="#p-a37"><img src="a37-team-wind-tunnel.jpg" alt="" loading="lazy"><span class="tile-n mono">02</span><span class="tile-t"><b>A-37 Dragonfly</b><small>Systems engineering</small></span></a>
+      <a class="tile" role="listitem" href="#p-cubesat"><img src="cubesat-tracker-closeup.jpg" alt="" loading="lazy"><span class="tile-n mono">03</span><span class="tile-t"><b>Sun-Tracking CubeSat</b><small>Arduino · Simulink</small></span></a>
+      <a class="tile" role="listitem" href="#p-evtol"><img src="evtol-4-prop-config.png" alt="" loading="lazy"><span class="tile-n mono">04</span><span class="tile-t"><b>Maelstrom eVTOL</b><small>OpenVSP · VSPAERO</small></span></a>
+      <a class="tile" role="listitem" href="#c-aro4080"><img src="fea-circular-plate-mode1.jpg" alt="" loading="lazy"><span class="tile-n mono">05</span><span class="tile-t"><b>ARO 4080 FEA</b><small>Femap · Nastran</small></span></a>
     </div>
   </header>
 
@@ -284,20 +326,20 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     <div class="sec-head"><span class="mono">01</span><h2>Projects</h2></div>
 
     <!-- PROJECT 1: FSAE -->
-    <article class="project">
+    <article class="project" id="p-fsae">
       <div class="p-text">
-        <div class="p-meta mono"><span>Bronco Formula SAE Electric</span><span>Aug 2026 – Present</span></div>
-        <h3>FSAE Electric Aerodynamics Package</h3>
+        <div class="p-meta mono"><span>Cal Poly Pomona</span><span>Aug 2026 – Present</span></div>
+        <h3>Bronco Formula SAE Electric (FSAE)</h3>
         <span class="role">Aerodynamics Design Captain</span>
         <ul>
-          <li>Led design of four aero subsystems to maximize downforce: front, rear and side wings, and the undertray.</li>
-          <li>Modeled the wings in SolidWorks and built the assemblies for CFD.</li>
-          <li>Ran ANSYS Fluent with Fluent Meshing on meshes of up to 18 million cells.</li>
-          <li>Wrote the team's 2D airfoil and CFD procedures, coordinated the CAD and CFD teams, and presented results at the PDR.</li>
+          <li>Lead design of 4 aerodynamic subsystems (front, rear, and side wings, undertray) to maximize downforce; modeled the wings in SolidWorks and built the assemblies for CFD.</li>
+          <li>Ran ANSYS Fluent with Fluent Meshing on meshes of up to 18 million cells, increasing front-wing downforce 12.5% (80 to 90 N) and reducing drag 35.6% (12.3 to 7.9 N).</li>
+          <li>Created documentation for the team’s 2D airfoil and CFD procedures; presented aero package results and design trade-offs at the Preliminary Design Review (PDR).</li>
         </ul>
         <div class="metrics">
-          <span class="metric">Downforce 80 → 90 N</span>
-          <span class="metric">Drag 12.3 → 7.918 N</span>
+          <span class="metric">Downforce +12.5%</span>
+          <span class="metric">Drag −35.6%</span>
+          <span class="metric">Drag 12.3 → 7.9 N</span>
           <span class="metric">18M-cell mesh</span>
         </div>
         <div class="tools"><span>SolidWorks</span><span>ANSYS Fluent</span><span>Fluent Meshing</span></div>
@@ -318,60 +360,70 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
       </div>
     </article>
 
-    <!-- PROJECT 2: eVTOL -->
-    <article class="project">
+    <!-- PROJECT 2: A-37 -->
+    <article class="project" id="p-a37">
       <div class="p-text">
-        <div class="p-meta mono"><span>Lockheed Martin &amp; AFRL</span><span>Aug 2024 – Jun 2025</span></div>
-        <h3>Maelstrom eVTOL: Distributed Electric Propulsion</h3>
-        <span class="role">Propulsion &amp; Aerodynamics Team Member</span>
+        <div class="p-meta mono"><span>Cal Poly Pomona</span><span>Jan 2026 – Jun 2026</span></div>
+        <h3>Cessna A-37 Dragonfly Design (ARO 2011L)</h3>
+        <span class="role">Deputy, Systems Engineering</span>
         <ul>
-          <li>Ran 50+ OpenVSP/VSPAERO simulations comparing configurations with 1, 2, 4 and 6 propellers for lift, drag, pitching moment, thrust and power.</li>
-          <li>Traded 7 propeller positions across 0°–90° tilt, with predicted thrust of 5.3–9.3 lbf per propeller, to choose propulsion placement.</li>
-          <li>Supported preliminary sizing against requirements of &lt;55 lb MTOW, 8 lb payload and 88 ft/s cruise.</li>
+          <li>Derived system-level and derived requirements from the mission timeline; applied functional analysis to down-select from three candidate architectures to a T-37 trainer conversion.</li>
+          <li>Built weighted trade matrices, risk analyses, and Simcenter simulations; presented the CoDR and PDR.</li>
         </ul>
         <div class="metrics">
-          <span class="metric">50+ simulations</span>
-          <span class="metric">7 positions × 0–90° tilt</span>
-          <span class="metric">MTOW &lt; 55 lb</span>
+          <span class="metric">CoDR + PDR</span>
+          <span class="metric">3 architectures → 1</span>
+          <span class="metric">Weighted trade matrices</span>
         </div>
-        <div class="tools"><span>OpenVSP</span><span>VSPAERO</span><span>Trade studies</span></div>
+        <div class="tools"><span>Simcenter</span><span>Requirements</span><span>Risk analysis</span></div>
       </div>
       <div class="p-figs">
         <figure class="fig wide">
-          <button class="frame" type="button" data-file="evtol-thrust-vs-tilt.png"><img src="evtol-thrust-vs-tilt.png" alt="Propeller wake Delta-Cp plot beside a chart of thrust rising from about 5.3 to 9.3 lb as tilt goes from 0 to 90 degrees, for seven propeller x-locations"></button>
-          <figcaption><b>FIG 2.1</b>Propeller wake (ΔCp) and thrust vs. tilt angle, 0°–90°, at 7 x-locations from 0 to 3 radii</figcaption>
+          <button class="frame" type="button" data-file="a37-team-wind-tunnel.jpg"><img src="a37-team-wind-tunnel.jpg" alt="The A-37 design team standing in front of the Cal Poly wind tunnel with the aircraft model in the test section"></button>
+          <figcaption><b>FIG 2.1</b>Design team with the A-37 model in the Cal Poly wind tunnel</figcaption>
         </figure>
         <figure class="fig">
-          <button class="frame" type="button" data-file="evtol-4-prop-config.png"><img src="evtol-4-prop-config.png" alt="OpenVSP isometric and front views of a wing with four distributed propellers"></button>
-          <figcaption><b>FIG 2.2</b>4-propeller distributed configuration, OpenVSP (iso and front views)</figcaption>
+          <button class="frame" type="button" data-file="a37-design-reference-mission.jpg"><img src="a37-design-reference-mission.jpg" alt="Design reference mission profile: climb to 36,000 ft cruise, descend for weapons release at 1,000 ft, land 250 miles out"></button>
+          <figcaption><b>FIG 2.2</b>Design reference mission: 36K ft cruise, low-altitude attack run, 250 mi</figcaption>
         </figure>
         <figure class="fig">
-          <button class="frame" type="button" data-file="evtol-vspaero-tilted-prop.png"><img src="evtol-vspaero-tilted-prop.png" alt="VSPAERO wireframe of a wing with a tilted propeller disk"></button>
-          <figcaption><b>FIG 2.3</b>VSPAERO model, wing with tilted propeller</figcaption>
+          <button class="frame" type="button" data-file="a37-system-requirements.jpg"><img src="a37-system-requirements.jpg" alt="Table of system-level requirements with validation methods"></button>
+          <figcaption><b>FIG 2.3</b>System-level requirements and validation methods</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="frame" type="button" data-file="a37-derived-requirements.jpg"><img src="a37-derived-requirements.jpg" alt="Table of derived requirements traced to system-level requirements"></button>
+          <figcaption><b>FIG 2.4</b>Derived requirements traced to system level</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="frame" type="button" data-file="a37-candidate-architectures.jpg"><img src="a37-candidate-architectures.jpg" alt="Three candidate architectures compared: A-37a Dragonfly, LGAH-1 rotorcraft and B-11 Strikeforce"></button>
+          <figcaption><b>FIG 2.5</b>Three candidate architectures for feasibility analysis</figcaption>
         </figure>
         <figure class="fig wide">
-          <button class="frame" type="button" data-file="evtol-unsteady-thrust.png"><img src="evtol-unsteady-thrust.png" alt="VSPAERO unsteady results showing propeller thrust over time settling between about 7 and 10"></button>
-          <figcaption><b>FIG 2.4</b>Unsteady VSPAERO thrust history for a single rotor</figcaption>
+          <button class="frame" type="button" data-file="a37-functional-allocation.jpg"><img src="a37-functional-allocation.jpg" alt="Functional allocation charts: enterprise architecture, operational architectures and functional WBS"></button>
+          <figcaption><b>FIG 2.6</b>Functional allocation: enterprise, operational and functional WBS architectures</figcaption>
+        </figure>
+        <figure class="fig wide">
+          <button class="frame" type="button" data-file="a37-selected-architecture.jpg"><img src="a37-selected-architecture.jpg" alt="Selected architecture: A-37 Dragonfly converted from the T-37 trainer with twin J-85 turbojets, eight hardpoints and wingtip tanks"></button>
+          <figcaption><b>FIG 2.7</b>Selected architecture: A-37 Dragonfly, converted from the T-37 trainer</figcaption>
         </figure>
       </div>
     </article>
 
     <!-- PROJECT 3: CubeSat -->
-    <article class="project">
+    <article class="project" id="p-cubesat">
       <div class="p-text">
         <div class="p-meta mono"><span>Cal Poly Pomona</span><span>Jan 2026 – Jun 2026</span></div>
         <h3>Sun-Tracking CubeSat Prototype</h3>
-        <span class="role">Avionics &amp; Controls Team Lead</span>
+        <span class="role">Avionics and Controls Team Lead</span>
         <ul>
-          <li>Led avionics and controls for a 6-member team.</li>
-          <li>Designed the sensor mount and pitch/yaw arm in SolidWorks; assembled 4 LDR sensors, an Arduino Mega 2560 and servo/stepper motors.</li>
-          <li>Wrote MATLAB/Simulink control logic and tested tracking. Measured 69° elevation matched the trigonometric prediction.</li>
+          <li>Led avionics and controls for a 6-member team; designed the sensor mount and pitch/yaw arm in SolidWorks and assembled 4 LDR sensors, an Arduino Mega 2560, and servo/stepper motors.</li>
+          <li>Wrote MATLAB and Arduino code and Simulink control logic; verified 69° tracking elevation against trigonometry.</li>
         </ul>
         <div class="metrics">
           <span class="metric">4 LDR sensors</span>
           <span class="metric">69° elevation verified</span>
         </div>
-        <div class="tools"><span>SolidWorks</span><span>Arduino</span><span>MATLAB/Simulink</span></div>
+        <div class="tools"><span>SolidWorks</span><span>Arduino</span><span>MATLAB</span><span>Simulink</span></div>
       </div>
       <div class="p-figs">
         <figure class="fig">
@@ -401,52 +453,40 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
       </div>
     </article>
 
-    <!-- PROJECT 4: A-37 -->
-    <article class="project">
+    <!-- PROJECT 4: eVTOL -->
+    <article class="project" id="p-evtol">
       <div class="p-text">
-        <div class="p-meta mono"><span>Cal Poly Pomona · ARO 2011L</span><span>Systems Engineering Lab</span></div>
-        <h3>Cessna A-37 Dragonfly Design</h3>
-        <span class="role">Deputy, Systems Engineering Team</span>
+        <div class="p-meta mono"><span>Lockheed Martin and AFRL</span><span>Aug 2024 – Jun 2025</span></div>
+        <h3>Maelstrom eVTOL</h3>
+        <span class="role">Propulsion and Aerodynamics Team Member</span>
         <ul>
-          <li>Turned mission needs into design decisions: derived system-level and derived requirements from the mission timeline.</li>
-          <li>Used functional analysis to down-select from three candidate architectures (fixed-wing jet, rotorcraft and a new-build jet) to the T-37 trainer conversion.</li>
-          <li>Built weighted trade matrices, risk analyses and Simcenter simulations; presented the CoDR and PDR.</li>
+          <li>Ran 50+ OpenVSP/VSPAERO simulations of 1, 2, 4, and 6-propeller distributed electric propulsion configurations, analyzing lift, drag, pitching moment, thrust, and power.</li>
+          <li>Performed trade studies across 7 propeller positions and 0–90° tilt angles (5.3–9.3 lbf predicted thrust per propeller).</li>
+          <li>Supported preliminary sizing against requirements of under 55 lb MTOW, 8 lb payload, and 88 ft/s cruise, evaluating motor, battery, and aerodynamic performance.</li>
         </ul>
         <div class="metrics">
-          <span class="metric">CoDR + PDR</span>
-          <span class="metric">3 architectures → 1</span>
-          <span class="metric">Weighted trade matrices</span>
+          <span class="metric">50+ simulations</span>
+          <span class="metric">7 positions × 0–90° tilt</span>
+          <span class="metric">MTOW &lt; 55 lb</span>
         </div>
-        <div class="tools"><span>Simcenter</span><span>Requirements</span><span>Risk analysis</span></div>
+        <div class="tools"><span>OpenVSP</span><span>VSPAERO</span><span>Trade studies</span></div>
       </div>
       <div class="p-figs">
         <figure class="fig wide">
-          <button class="frame" type="button" data-file="a37-team-wind-tunnel.jpg"><img src="a37-team-wind-tunnel.jpg" alt="The A-37 design team standing in front of the Cal Poly wind tunnel with the aircraft model in the test section"></button>
-          <figcaption><b>FIG 4.1</b>Design team with the A-37 model in the Cal Poly wind tunnel</figcaption>
+          <button class="frame" type="button" data-file="evtol-thrust-vs-tilt.png"><img src="evtol-thrust-vs-tilt.png" alt="Propeller wake Delta-Cp plot beside a chart of thrust rising from about 5.3 to 9.3 lb as tilt goes from 0 to 90 degrees, for seven propeller x-locations"></button>
+          <figcaption><b>FIG 4.1</b>Propeller wake (ΔCp) and thrust vs. tilt angle, 0°–90°, at 7 x-locations from 0 to 3 radii</figcaption>
         </figure>
         <figure class="fig">
-          <button class="frame" type="button" data-file="a37-design-reference-mission.jpg"><img src="a37-design-reference-mission.jpg" alt="Design reference mission profile: climb to 36,000 ft cruise, descend for weapons release at 1,000 ft, land 250 miles out"></button>
-          <figcaption><b>FIG 4.2</b>Design reference mission: 36K ft cruise, low-altitude attack run, 250 mi</figcaption>
+          <button class="frame" type="button" data-file="evtol-4-prop-config.png"><img src="evtol-4-prop-config.png" alt="OpenVSP isometric and front views of a wing with four distributed propellers"></button>
+          <figcaption><b>FIG 4.2</b>4-propeller distributed configuration, OpenVSP (iso and front views)</figcaption>
         </figure>
         <figure class="fig">
-          <button class="frame" type="button" data-file="a37-system-requirements.jpg"><img src="a37-system-requirements.jpg" alt="Table of system-level requirements with validation methods"></button>
-          <figcaption><b>FIG 4.3</b>System-level requirements and validation methods</figcaption>
-        </figure>
-        <figure class="fig">
-          <button class="frame" type="button" data-file="a37-derived-requirements.jpg"><img src="a37-derived-requirements.jpg" alt="Table of derived requirements traced to system-level requirements"></button>
-          <figcaption><b>FIG 4.4</b>Derived requirements traced to system level</figcaption>
-        </figure>
-        <figure class="fig">
-          <button class="frame" type="button" data-file="a37-candidate-architectures.jpg"><img src="a37-candidate-architectures.jpg" alt="Three candidate architectures compared: A-37a Dragonfly, LGAH-1 rotorcraft and B-11 Strikeforce"></button>
-          <figcaption><b>FIG 4.5</b>Three candidate architectures for feasibility analysis</figcaption>
+          <button class="frame" type="button" data-file="evtol-vspaero-tilted-prop.png"><img src="evtol-vspaero-tilted-prop.png" alt="VSPAERO wireframe of a wing with a tilted propeller disk"></button>
+          <figcaption><b>FIG 4.3</b>VSPAERO model, wing with tilted propeller</figcaption>
         </figure>
         <figure class="fig wide">
-          <button class="frame" type="button" data-file="a37-functional-allocation.jpg"><img src="a37-functional-allocation.jpg" alt="Functional allocation charts: enterprise architecture, operational architectures and functional WBS"></button>
-          <figcaption><b>FIG 4.6</b>Functional allocation: enterprise, operational and functional WBS architectures</figcaption>
-        </figure>
-        <figure class="fig wide">
-          <button class="frame" type="button" data-file="a37-selected-architecture.jpg"><img src="a37-selected-architecture.jpg" alt="Selected architecture: A-37 Dragonfly converted from the T-37 trainer with twin J-85 turbojets, eight hardpoints and wingtip tanks"></button>
-          <figcaption><b>FIG 4.7</b>Selected architecture: A-37 Dragonfly, converted from the T-37 trainer</figcaption>
+          <button class="frame" type="button" data-file="evtol-unsteady-thrust.png"><img src="evtol-unsteady-thrust.png" alt="VSPAERO unsteady results showing propeller thrust over time settling between about 7 and 10"></button>
+          <figcaption><b>FIG 4.4</b>Unsteady VSPAERO thrust history for a single rotor</figcaption>
         </figure>
       </div>
     </article>
@@ -455,8 +495,13 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
   <section id="coursework">
     <div class="sec-head"><span class="mono">02</span><h2>Coursework</h2></div>
 
+    <div class="course-list">
+      <h3 class="mono">Relevant coursework</h3>
+      <div class="chips"><span class="chip">Aerospace Structural Mechanics I and II</span><span class="chip">Aerospace Structures Lab</span><span class="chip">Finite Element Analysis of Structures</span><span class="chip">Fundamentals of Systems Engineering and Design Lab</span><span class="chip">Space and Aero Vehicle Design</span><span class="chip">Orbital Mechanics</span><span class="chip">Air and Rocket Propulsion</span><span class="chip">Aerospace Feedback Control Systems and Lab</span><span class="chip">Avionics Design and Circuit Analysis</span><span class="chip">Materials Engineering</span><span class="chip">Fluid Dynamics and Low-Speed Aerodynamics</span><span class="chip">Differential Equations</span><span class="chip">Linear Algebra</span></div>
+    </div>
+
     <!-- COURSE: ARO 4080 -->
-    <article class="project">
+    <article class="project" id="c-aro4080">
       <div class="p-text">
         <div class="p-meta mono"><span>Cal Poly Pomona</span><span>Fall 2026</span></div>
         <h3>ARO 4080: Finite Element Analysis</h3>
@@ -499,23 +544,21 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
           <h3>Barista</h3>
           <span class="org">Starbucks Corporation</span>
           <ul class="job-list">
-            <li>Deliver friendly, personalized customer service, communicating clearly with customers and teammates and building connections with regulars.</li>
-            <li>Handle cash and card transactions accurately and follow food safety and sanitation standards when preparing beverages and food.</li>
+            <li>Delivered friendly, courteous, personalized customer support, listening to each customer’s needs and promptly resolving questions, concerns, and order issues to ensure a positive experience.</li>
+            <li>Collaborated with teammates in a fast-paced, high-volume environment, communicating clearly during peak hours, handling transactions accurately, and following food safety and sanitation standards.</li>
           </ul>
-          <p class="cert-line"><b>California Food Handler Card</b> · StateFoodSafety (ANAB-accredited) · issued Aug 2026, valid 3 years</p>
         </div>
-        <figure class="fig job-cert">
-          <button class="frame" type="button" data-file="food-handler-card.jpg"><img src="food-handler-card.jpg" alt="California Food Handlers Course certificate of training awarded to Andrew Cao, issued August 20, 2026"></button>
-          <figcaption><b>CERT</b>California Food Handler Card</figcaption>
-        </figure>
       </div>
     </div>
     <div class="job">
       <span class="mono when">Jun 2025 – Jun 2026</span>
       <div>
-        <h3>Data &amp; Cataloging Assistant</h3>
+        <h3>Data and Cataloging Assistant</h3>
         <span class="org">XMY Autoparts</span>
-        <p>Resolved about 10,000 vehicle application overlap errors. I generated overlap reports, traced each error to its cause (duplicate part allocation, missing submodel or incorrect application), and matched parts to the correct brake rotor using OEM part numbers and Excel XLOOKUP across JNP PartCat, Nexcat and Centric Parts.</p>
+        <ul class="job-list">
+            <li>Resolved approximately 10,000 vehicle application overlap errors by generating overlap reports and tracing each to its root cause using OEM part numbers and Excel XLOOKUP in JNP PartCat, Nexcat, and Centric Parts.</li>
+            <li>Maintained OEM interchange mappings with external companies and co-wrote standard operating procedures.</li>
+          </ul>
       </div>
     </div>
   </section>
@@ -525,15 +568,19 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
     <div class="skills">
       <div class="skill-group">
         <h3>Analysis &amp; simulation</h3>
-        <div class="chips"><span class="chip">ANSYS Fluent</span><span class="chip">Femap/Nastran (FEA)</span><span class="chip">OpenVSP/VSPAERO</span><span class="chip">MATLAB/Simulink</span><span class="chip">Simcenter</span></div>
+        <div class="chips"><span class="chip">Finite Element Analysis (FEA)</span><span class="chip">Computational Fluid Dynamics (CFD)</span><span class="chip">Simcenter Femap/Nastran</span><span class="chip">ANSYS Fluent</span><span class="chip">OpenVSP/VSPAERO</span><span class="chip">XFOIL/JavaFoil</span><span class="chip">MATLAB/Simulink</span></div>
       </div>
       <div class="skill-group">
         <h3>Design &amp; hardware</h3>
-        <div class="chips"><span class="chip">SolidWorks</span><span class="chip">3DEXPERIENCE</span><span class="chip">Component design</span><span class="chip">Hardware assembly</span><span class="chip">Structures testing</span></div>
+        <div class="chips"><span class="chip">SolidWorks</span><span class="chip">Autodesk Fusion 360</span><span class="chip">3DEXPERIENCE</span><span class="chip">CAD and component design</span><span class="chip">Hardware assembly</span><span class="chip">Arduino</span><span class="chip">Structures testing and data analysis</span></div>
       </div>
       <div class="skill-group">
         <h3>Systems engineering</h3>
-        <div class="chips"><span class="chip">Requirements derivation</span><span class="chip">Functional analysis</span><span class="chip">Trade studies</span><span class="chip">Risk management</span><span class="chip">Design reviews</span><span class="chip">Technical writing</span></div>
+        <div class="chips"><span class="chip">Requirements derivation</span><span class="chip">Functional analysis</span><span class="chip">Trade studies</span><span class="chip">Risk management</span><span class="chip">Design review presentations</span><span class="chip">Technical writing</span></div>
+      </div>
+      <div class="skill-group">
+        <h3>Tools &amp; programming</h3>
+        <div class="chips"><span class="chip">Microsoft Excel</span><span class="chip">SharePoint</span><span class="chip">Notion</span><span class="chip">Python (introductory)</span></div>
       </div>
     </div>
   </section>
@@ -548,6 +595,10 @@ figcaption b { font-family: var(--font-mono); font-weight: 500; color: var(--ink
       <figure class="fig cert">
         <button class="frame" type="button" data-file="matlab-programming-cert.jpg"><img src="matlab-programming-cert.jpg" alt="MathWorks certificate: Andrew Cao completed the Programming in MATLAB learning path, 19 November 2026"></button>
         <figcaption><b>Programming in MATLAB</b><br>MathWorks Training Services · 4-hour learning path · Nov 2026</figcaption>
+      </figure>
+      <figure class="fig cert">
+        <button class="frame" type="button" data-file="matlab-onramp-cert.jpg"><img src="matlab-onramp-cert.jpg" alt="MathWorks course completion certificate: Andrew Cao completed 100% of MATLAB Onramp, 18 November 2026"></button>
+        <figcaption><b>MATLAB Onramp</b><br>MathWorks Training Services · 100% complete · Nov 2026</figcaption>
       </figure>
       <figure class="fig cert">
         <button class="frame" type="button" data-file="food-handler-card.jpg"><img src="food-handler-card.jpg" alt="California Food Handlers Course certificate of training awarded to Andrew Cao, issued August 20, 2026"></button>
